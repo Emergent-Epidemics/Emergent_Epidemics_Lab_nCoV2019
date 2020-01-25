@@ -10,13 +10,13 @@ The shiny app code was adapted from [RShiny Superzip](https://github.com/rstudio
 To run, you need to create a folder called "secrets" and add to that folder:
 1. A file called mapboxkey.txt that has your mapbox api key on the first line of an otherwise plain text file.
 2.  A file called service_google_api_key.json that has the json object from your Google service API key (see https://gargle.r-lib.org/articles/non-interactive-auth.html for more information).
-3. 
+
 ### Data
-[Hubei cases](/ncov_hubei.csv) 
+[Hubei cases](https://docs.google.com/spreadsheets/d/1itaohdPiAeniCXNlntNztZ_oRvjh0HsGuJXUJWET008/edit#gid=429276722) 
 
-[Outside Hubei cases](/ncov_outside_hubei.csv) 
+[Outside Hubei cases](https://docs.google.com/spreadsheets/d/1itaohdPiAeniCXNlntNztZ_oRvjh0HsGuJXUJWET008/edit#gid=0) 
 
-The below is copied from a post in [Virological](http://virological.org/t/epidemiological-data-from-the-ncov-2019-outbreak-early-descriptions-from-publicly-available-data/33) that describes the data.
+The below is copied from a post in [Virological](http://virological.org/t/epidemiological-data-from-the-ncov-2019-outbreak-early-descriptions-from-publicly-available-data/337) that describes the data.
 
 Epidemiological data from the 2019 nCoV outbreak: early descriptions
 

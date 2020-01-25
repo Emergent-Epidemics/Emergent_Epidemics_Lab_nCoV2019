@@ -21,7 +21,7 @@ options(mapbox.accessToken = mapbox_accessToken)
 sheets_auth(path = "secrets/service_google_api_key.json", use_oob = TRUE)
 
 wuhan_data <- sheets_get(ss = "1itaohdPiAeniCXNlntNztZ_oRvjh0HsGuJXUJWET008") %>%
-  read_sheet(sheet = "wuhan")
+  read_sheet(sheet = "Hubei")
 
 #changing wuhan resident column
 find_Wuhan_resident <- which(colnames(wuhan_data) == "Wuhan_resident")
@@ -32,7 +32,7 @@ if(length(find_Wuhan_resident) == 1){
 wuhan_data$ID <- paste0(wuhan_data$ID, "-Wuhan")
 
 outside_wuhan_data <- sheets_get(ss = "1itaohdPiAeniCXNlntNztZ_oRvjh0HsGuJXUJWET008") %>%
-  read_sheet(sheet = "outside_wuhan")
+  read_sheet(sheet = "outside_Hubei")
 
 outside_wuhan_data$ID <- paste0(outside_wuhan_data$ID, "-Outside-Wuhan")
 
