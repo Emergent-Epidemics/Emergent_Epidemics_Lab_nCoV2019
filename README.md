@@ -1,4 +1,4 @@
-## Code for an nCov2019 RShiny App
+## Code for an RShiny App to Map nCov2019 Line List Data
 
 ## Acknowledgements
 We want to thank all the individuals and organizations across the world who have been willing and able to report data in as open and timely manner as possible. To see individuals involved in the often painstaking data curation process, please see [beoutbreakprepared/nCoV2019](https://github.com/beoutbreakprepared/nCoV2019).
@@ -16,7 +16,7 @@ To run, you need to create a folder called "secrets" and add to that folder:
 
 [Outside Hubei cases](https://docs.google.com/spreadsheets/d/1itaohdPiAeniCXNlntNztZ_oRvjh0HsGuJXUJWET008/edit#gid=0) 
 
-The below is copied from a post in [Virological](http://virological.org/t/epidemiological-data-from-the-ncov-2019-outbreak-early-descriptions-from-publicly-available-data/337) that describes the data.
+The below is copied from a post in [Virological](http://virological.org/t/epidemiological-data-from-the-ncov-2019-outbreak-early-descriptions-from-publicly-available-data/337) by [Moritz Kraemer](http://evolve.zoo.ox.ac.uk/Evolve/Moritz_Kraemer.html) that describes the data.
 
 Epidemiological data from the 2019 nCoV outbreak: early descriptions
 
