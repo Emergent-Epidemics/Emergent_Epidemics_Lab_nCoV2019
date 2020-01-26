@@ -61,7 +61,7 @@ function(input, output, session) {
       clearPopups() %>%
       clearHeatmap() %>% 
       addCircleMarkers(lng = ~longitude, lat = ~latitude, layerId = ~ID, radius= ~node_radii, stroke=FALSE, fillOpacity=node_opac, fillColor=pal(colorData)) %>%
-      addLegend(position = "topright", pal=pal, values=colorData, title=paste0("Days since confirmation"), layerId="colorLegend")
+      addLegend(position = "bottomleft", pal=pal, values=colorData, title=paste0("Days since confirmation"), layerId="colorLegend")
     
     #leafletProxy("map", data = filter_data_china) %>%
     #  clearGroup(group = "heatmap-china") %>% 
@@ -202,8 +202,10 @@ function(input, output, session) {
       name <- input$goto$name
       lat <- input$goto$lat
       lng <- input$goto$lng
-      showCasePopup(name, lat, lng)
-      map %>% fitBounds(lng - dist, lat - dist, lng + dist, lat + dist)
+      if(is.numeric(lat) == TRUE & is.numeric(lng) == TRUE){
+        showCasePopup(name, lat, lng)
+        map %>% fitBounds(lng - dist, lat - dist, lng + dist, lat + dist)
+      }
     })
   })
   
