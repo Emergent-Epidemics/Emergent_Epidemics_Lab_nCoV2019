@@ -11,6 +11,7 @@ cols_to_use <- c("ID", "age", "sex", "city", "province", "country", "date_onset_
 
 mapbox_accessToken <- readLines("secrets/mapboxkey.txt")
 map_url <- "mapbox://styles/scarpino/ck4zuxput0zz71dlkntkup80v"
+google_sheet_name <- readLines("secrets/google_sheet_name.txt")
 
 options(mapbox.accessToken = mapbox_accessToken)
 
@@ -20,7 +21,7 @@ options(mapbox.accessToken = mapbox_accessToken)
 #data
 sheets_auth(path = "secrets/service_google_api_key.json", use_oob = TRUE)
 
-wuhan_data <- sheets_get(ss = "1itaohdPiAeniCXNlntNztZ_oRvjh0HsGuJXUJWET008") %>%
+wuhan_data <- sheets_get(ss = google_sheet_name) %>%
   read_sheet(sheet = "Hubei")
 
 #changing wuhan resident column
@@ -31,7 +32,7 @@ if(length(find_Wuhan_resident) == 1){
 
 wuhan_data$ID <- paste0(wuhan_data$ID, "-Wuhan")
 
-outside_wuhan_data <- sheets_get(ss = "1itaohdPiAeniCXNlntNztZ_oRvjh0HsGuJXUJWET008") %>%
+outside_wuhan_data <- sheets_get(ss = google_sheet_name) %>%
   read_sheet(sheet = "outside_Hubei")
 
 outside_wuhan_data$ID <- paste0(outside_wuhan_data$ID, "-Outside-Wuhan")
