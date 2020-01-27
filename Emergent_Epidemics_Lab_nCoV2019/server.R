@@ -28,7 +28,7 @@ function(input, output, session) {
         setView = FALSE
       ) %>%
       #setView(lng = median(full_data$longitude, na.rm = TRUE), lat = median(full_data$latitude, na.rm = TRUE), zoom = 3)
-      setView(lng = 17, lat = 30, zoom = 3)
+      setView(lng = 17, lat = 15, zoom = 3)
   })
   
   #add cases from filtered view

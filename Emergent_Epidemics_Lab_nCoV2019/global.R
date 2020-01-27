@@ -37,7 +37,7 @@ outside_wuhan_data <- sheets_get(ss = google_sheet_name) %>%
 
 outside_wuhan_data$ID <- paste0(outside_wuhan_data$ID, "-Outside-Wuhan")
 
-full_data <- rbind(wuhan_data, outside_wuhan_data)
+full_data <- rbind(wuhan_data, outside_wuhan_data[,colnames(wuhan_data)])
 
 full_data$latitude <- jitter(full_data$latitude)
 full_data$longitude <- jitter(full_data$longitude)

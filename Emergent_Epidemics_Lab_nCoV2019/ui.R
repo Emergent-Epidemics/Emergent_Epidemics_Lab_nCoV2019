@@ -24,8 +24,8 @@ navbarPage("nCoV2019", id="nav",
                         leafletOutput("map", width="100%", height="100%"),
                         
                         absolutePanel(id = "controls", class = "panel panel-default", fixed = TRUE,
-                                      draggable = TRUE, top = 300, left = "auto", right = 900, bottom = "auto",
-                                      width = 330, height = "auto",
+                                      draggable = TRUE, top = 400, left = "auto", right = 1300, bottom = "auto",
+                                      width = 300, height = "auto",
                                       
                                       h3(textOutput("total_cases")),
                                       
