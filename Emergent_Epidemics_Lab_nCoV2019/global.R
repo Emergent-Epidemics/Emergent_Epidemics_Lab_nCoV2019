@@ -7,7 +7,9 @@ library(googlesheets4)
 library(googledrive)
 
 #globals
-cols_to_use <- c("ID", "age", "sex", "city", "province", "country", "date_onset_symptoms", "date_admission_hospital", "date_confirmation", "symptoms", "lives_in_Wuhan", "travel_history_dates", "travel_history_location", "reported_market_exposure", "sequence_available", "outcome", "source")
+cols_to_use <- c("ID", "age", "sex", "city", "province", "country" ,"date_onset_symptoms", "date_admission_hospital", "date_confirmation", "symptoms", "lives_in_Wuhan", "travel_history_dates", "travel_history_location", "reported_market_exposure", "sequence_available", "outcome", "source")
+
+cols_to_match <- c("ID", "age", "sex", "city", "province", "country", "latitude", "longitude", "date_onset_symptoms", "date_admission_hospital", "date_confirmation", "symptoms", "lives_in_Wuhan", "travel_history_dates", "travel_history_location", "reported_market_exposure", "sequence_available", "outcome", "source")
 
 mapbox_accessToken <- readLines("secrets/mapboxkey.txt")
 map_url <- "mapbox://styles/scarpino/ck4zuxput0zz71dlkntkup80v"
@@ -37,7 +39,7 @@ outside_wuhan_data <- sheets_get(ss = google_sheet_name) %>%
 
 outside_wuhan_data$ID <- paste0(outside_wuhan_data$ID, "-Outside-Wuhan")
 
-full_data <- rbind(wuhan_data, outside_wuhan_data[,colnames(wuhan_data)])
+full_data <- rbind(wuhan_data[,cols_to_match], outside_wuhan_data[,cols_to_match])
 
 full_data$latitude <- jitter(full_data$latitude)
 full_data$longitude <- jitter(full_data$longitude)
