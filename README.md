@@ -1,16 +1,18 @@
 ## Code for an RShiny App to Map nCov2019 Line List Data
 
-## Acknowledgements
+### Acknowledgements
 We want to thank all the individuals and organizations across the world who have been willing and able to report data in as open and timely manner as possible. To see individuals involved in the often painstaking data curation process, please see [beoutbreakprepared/nCoV2019](https://github.com/beoutbreakprepared/nCoV2019).
 
 ### Citation
 The shiny app code was adapted from [RShiny Superzip](https://github.com/rstudio/shiny-examples/tree/master/063-superzip-example) and uses tools from [MapBox](https://www.mapbox.com/) and [Leaflet.js](https://leafletjs.com/).  
 
 ### Notes on the code
-To run, you need to create a folder called "secrets" and add to that folder:
+I. To run, you need to create a folder called "secrets" and add to that folder:
 1. A file called mapboxkey.txt that has your mapbox api key on the first line of an otherwise plain text file.
 2.  A file called service_google_api_key.json that has the json object from your Google service API key (see https://gargle.r-lib.org/articles/non-interactive-auth.html for more information).
 3. A file called google_sheet_name.txt that has the id for the google sheet on the first line of an otherwise plain text file.  In this case, you'll almost certainly want to use: 1itaohdPiAeniCXNlntNztZ_oRvjh0HsGuJXUJWET008
+
+II. You also need to create a folder called "data" and run update_and_deploy.R
 
 ### Data
 [Hubei cases](https://docs.google.com/spreadsheets/d/1itaohdPiAeniCXNlntNztZ_oRvjh0HsGuJXUJWET008/edit#gid=429276722) 
