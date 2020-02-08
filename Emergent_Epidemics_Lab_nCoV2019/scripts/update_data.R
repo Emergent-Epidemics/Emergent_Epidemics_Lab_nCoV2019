@@ -2,7 +2,7 @@
 #nCov2019
 #Jan 24th 2020
 
-update_data <- function() {
+update_data <- function(savefile = TRUE) {
   #libraries
   require(googlesheets4)
   require(googledrive)
@@ -60,6 +60,10 @@ update_data <- function() {
   full_data$longitude <- jitter(full_data$longitude)
   
   #saving data
-  saveRDS(full_data, file = "data/full_data.RData")
-  write(as.character(Sys.time()), file = "data/last_data_update.txt")
+  if(savefile == TRUE){
+    saveRDS(full_data, file = "data/full_data.RData")
+    write(as.character(Sys.time()), file = "data/last_data_update.txt")
+  }else{
+    return(full_data)
+  }
 }
