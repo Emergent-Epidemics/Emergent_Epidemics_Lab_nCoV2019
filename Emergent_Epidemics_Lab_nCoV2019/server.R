@@ -12,20 +12,11 @@ library(lattice)
 library(dplyr)
 library(leaflet.mapboxgl)
 library(leaflet.extras)
-library(future)
-library(promises)
-plan(multisession)
 
 ########
 #Server#
 ########
 function(input, output, session) {
-  full_data_react <- reactiveFileReader(1000, session, "data/full_data.RData", readRDS)
-  
-  if(time_diff > 0){
-      future(update_data())
-    }
-  
   ##########
   #Map View#
   ##########
@@ -89,9 +80,9 @@ function(input, output, session) {
   #make filtered view
   make_filter_data <- reactive({
     if(is.null(x = input$wuhan_resident) == TRUE){
-      df <- full_data_react()
+      df <- full_data
     }else{
-      df <- full_data_react() %>%
+      df <- full_data %>%
         filter(
           lives_in_Wuhan %in% input$wuhan_resident
         )
