@@ -12,22 +12,30 @@ library(lattice)
 library(dplyr)
 library(leaflet.mapboxgl)
 library(leaflet.extras)
+library(future)
+library(promises)
+plan(multisession)
 
 ########
 #Server#
 ########
 function(input, output, session) {
-
+  full_data_react <- reactiveFileReader(1000, session, "data/full_data.RData", readRDS)
+  
+  if(time_diff > 0){
+      future(update_data())
+    }
+  
   ##########
   #Map View#
   ##########
+  
   output$map <- renderLeaflet({
     leaflet() %>%
       addMapboxGL(
         style = map_url,
         setView = FALSE
       ) %>%
-      #setView(lng = median(full_data$longitude, na.rm = TRUE), lat = median(full_data$latitude, na.rm = TRUE), zoom = 3)
       setView(lng = 17, lat = 15, zoom = 3)
   })
   
@@ -69,13 +77,21 @@ function(input, output, session) {
     
   })
   
+  #update data
+  output$last_updated <- reactive({
+    filter_data <- make_filter_data() #this just triggers an update if the data refresh
+    last_update <- readLines("data/last_data_update.txt")
+    last_update_day <- strptime(substr(last_update, 1, 10), format = "%Y-%m-%d")
+
+    format(last_update_day, format = "%B %d, %Y")
+  })
+  
   #make filtered view
   make_filter_data <- reactive({
-    
     if(is.null(x = input$wuhan_resident) == TRUE){
-      df <- full_data
+      df <- full_data_react()
     }else{
-      df <- full_data %>%
+      df <- full_data_react() %>%
         filter(
           lives_in_Wuhan %in% input$wuhan_resident
         )

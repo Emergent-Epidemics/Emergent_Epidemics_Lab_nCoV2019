@@ -28,7 +28,7 @@ navbarPage("nCoV2019", id="nav",
                                       width = 300, height = "auto",
                                       
                                       h3(textOutput("total_cases")),
-                                      
+                                      h4(textOutput("last_updated")),
                                       selectInput("wuhan_resident", "Lives in Wuhan?", unique(full_data$lives_in_Wuhan), multiple = TRUE),
                                       selectInput("travel_history_location", "Travel History", unique(full_data$travel_history_location), multiple = TRUE),
                                       selectInput("country", "Country", unique(full_data$country), multiple = TRUE),
