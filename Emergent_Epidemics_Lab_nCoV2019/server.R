@@ -74,7 +74,7 @@ function(input, output, session) {
     last_update <- readLines("data/last_data_update.txt")
     last_update_day <- strptime(substr(last_update, 1, 10), format = "%Y-%m-%d")
 
-    format(last_update_day, format = "%B %d, %Y")
+    paste0("Last Updated: ", format(last_update_day, format = "%b %d, %Y"))
   })
   
   #make filtered view
