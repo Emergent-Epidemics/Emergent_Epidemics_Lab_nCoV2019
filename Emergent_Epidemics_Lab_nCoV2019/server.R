@@ -33,10 +33,7 @@ function(input, output, session) {
   #add cases from filtered view
   observe({
     filter_data <- make_filter_data()
-    
-    use_china <- which(toupper(filter_data$country) == "CHINA")
-    filter_data_china <- filter_data[use_china,]
-      
+
     first_date <- min(filter_data$date_confirmation, na.rm = TRUE)
     first_date_plot <- format(first_date, format = "%d-%m-%Y")
     
@@ -55,10 +52,8 @@ function(input, output, session) {
     filter_data$node_radii <- node_radii
 
     leafletProxy("map", data = filter_data) %>%
-      clearShapes() %>%
       clearMarkers() %>%
       clearPopups() %>%
-      clearHeatmap() %>% 
       addCircleMarkers(lng = ~longitude, lat = ~latitude, layerId = ~ID, radius= ~node_radii, stroke=FALSE, fillOpacity=node_opac, fillColor=pal(colorData)) %>%
       addLegend(position = "bottomleft", pal=pal, values=colorData, title=paste0("Days since confirmation"), layerId="colorLegend")
     
