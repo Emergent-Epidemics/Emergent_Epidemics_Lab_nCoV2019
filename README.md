@@ -13,6 +13,7 @@ I. To run, you need to create a folder called "secrets" and add to that folder:
 3. A file called google_sheet_name.txt that has the id for the google sheet on the first line of an otherwise plain text file.  In this case, you'll almost certainly want to use: 1itaohdPiAeniCXNlntNztZ_oRvjh0HsGuJXUJWET008
 
 II. You also need to create a folder called "data" and run update_and_deploy.R
+1. You can schedule update_and_deploy.R using cronR, but you need to pass one argument from the command line, which is the full path to the directory containing "update_and_deploy.R"
 
 ### Data
 [Hubei cases](https://docs.google.com/spreadsheets/d/1itaohdPiAeniCXNlntNztZ_oRvjh0HsGuJXUJWET008/edit#gid=429276722) 
