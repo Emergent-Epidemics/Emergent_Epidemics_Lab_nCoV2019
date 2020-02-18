@@ -2,7 +2,7 @@
 #nCov2019
 #Jan 24th 2020
 
-update_data <- function(savefile = TRUE) {
+update_data <- function(savefile = TRUE, path = NULL) {
   #libraries
   require(googlesheets4)
   require(googledrive)
@@ -10,8 +10,8 @@ update_data <- function(savefile = TRUE) {
   #globals
   cols_to_match <- c("ID", "age", "sex", "city", "province", "country", "latitude", "longitude", "date_onset_symptoms", "date_admission_hospital", "date_confirmation", "symptoms", "lives_in_Wuhan", "travel_history_dates", "travel_history_location", "reported_market_exposure", "sequence_available", "outcome", "source")
   
-  google_sheet_name <- readLines("secrets/google_sheet_name.txt")
-  sheets_auth(path = "secrets/service_google_api_key.json", use_oob = TRUE)
+  google_sheet_name <- readLines(paste0(path, "secrets/google_sheet_name.txt"))
+  sheets_auth(path = paste0(path, "secrets/service_google_api_key.json"), use_oob = TRUE)
   
   #acc functions
   
@@ -61,8 +61,8 @@ update_data <- function(savefile = TRUE) {
   
   #saving data
   if(savefile == TRUE){
-    saveRDS(full_data, file = "data/full_data.RData")
-    write(as.character(Sys.time()), file = "data/last_data_update.txt")
+    saveRDS(full_data, file = paste0(path, "data/full_data.RData"))
+    write(as.character(Sys.time()), file = paste0(path, "data/last_data_update.txt"))
   }else{
     return(full_data)
   }

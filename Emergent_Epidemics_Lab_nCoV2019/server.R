@@ -50,12 +50,14 @@ function(input, output, session) {
     node_opac <- node_radii/max(node_radii, na.rm = TRUE)
     
     filter_data$node_radii <- node_radii
+    
+    legend_vals <- round(seq(1, max(colorData, na.rm = TRUE), length.out = 10),0)
 
     leafletProxy("map", data = filter_data) %>%
       clearMarkers() %>%
       clearPopups() %>%
       addCircleMarkers(lng = ~longitude, lat = ~latitude, layerId = ~ID, radius= ~node_radii, stroke=FALSE, fillOpacity=node_opac, fillColor=pal(colorData)) %>%
-      addLegend(position = "bottomleft", pal=pal, values=colorData, title=paste0("Days since confirmation"), layerId="colorLegend")
+      addLegend(position = "bottomleft", pal=pal, values=legend_vals, title=paste0("Days since confirmation"), layerId="colorLegend")
     
     #leafletProxy("map", data = filter_data_china) %>%
     #  clearGroup(group = "heatmap-china") %>% 
