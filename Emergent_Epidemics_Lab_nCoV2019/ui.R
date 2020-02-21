@@ -10,7 +10,7 @@ library(leaflet)
 ####
 #UI#
 ####
-navbarPage("nCoV2019", id="nav",
+navbarPage("COVID-19", id="nav",
            tabPanel("Interactive Map",
                     div(class="outer",
                         
@@ -57,5 +57,8 @@ navbarPage("nCoV2019", id="nav",
                     hr(),
                     DT::dataTableOutput("wuhan_table")
            ),
-           conditionalPanel("false", icon("crosshair"))
+           conditionalPanel("false", icon("crosshair")),
+           tabPanel("News Sources",
+                    DT::dataTableOutput("news_table")
+           )
 )

@@ -51,7 +51,12 @@ function(input, output, session) {
     
     filter_data$node_radii <- node_radii
     
-    legend_vals <- round(seq(1, max(colorData, na.rm = TRUE), length.out = 10),0)
+    if(is.finite(max(colorData, na.rm = TRUE)) == FALSE){
+      legend_vals <- NA
+    }else{
+      legend_vals <- round(seq(1, max(colorData, na.rm = TRUE), length.out = 10),0)
+    }
+    
 
     leafletProxy("map", data = filter_data) %>%
       clearMarkers() %>%
@@ -230,5 +235,17 @@ function(input, output, session) {
     
     action <- DT::dataTableAjax(session, df, outputId = "wuhan_table")
     DT::datatable(df, options = list(ajax = list(url = action)), escape = FALSE)
+  })
+  
+  output$news_table <- DT::renderDataTable({
+    df <- make_filter_data()
+    short_url <- unlist(lapply(strsplit(split = "[/]", x = df$source), function(x) unlist(x)[3]))
+    by_tab <- by(data = short_url, INDICES = df$country, FUN = unique)
+    len_country <- unlist(lapply(by_tab, length))
+    by_df <- array(by_tab, dim(by_tab), dimnames(by_tab))
+    data.out <- data.frame(rep(names(len_country), times = len_country), as.character(unlist(by_tab)))
+    colnames(data.out) <- c("Country", "News Sources")
+    data.out <- na.omit(data.out)
+    DT::datatable(data.out)
   })
 }

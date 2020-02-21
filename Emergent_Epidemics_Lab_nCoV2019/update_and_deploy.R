@@ -7,6 +7,6 @@ if(!interactive()){
   deployApp(appDir = args[1])
 }else{
   source("scripts/update_data.R") 
-  update_data(savefile = TRUE)
+  update_data(savefile = TRUE, path = paste0(getwd(),"/"))
   deployApp()
 }
