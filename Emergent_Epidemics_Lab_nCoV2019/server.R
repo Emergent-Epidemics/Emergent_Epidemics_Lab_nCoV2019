@@ -239,13 +239,19 @@ function(input, output, session) {
   
   output$news_table <- DT::renderDataTable({
     df <- make_filter_data()
-    short_url <- unlist(lapply(strsplit(split = "[/]", x = df$source), function(x) unlist(x)[3]))
-    by_tab <- by(data = short_url, INDICES = df$country, FUN = unique)
-    len_country <- unlist(lapply(by_tab, length))
-    by_df <- array(by_tab, dim(by_tab), dimnames(by_tab))
-    data.out <- data.frame(rep(names(len_country), times = len_country), as.character(unlist(by_tab)))
+    if(nrow(df) == 0){
+      data.out <- df[,1:2]
+    }else{
+      short_url <- unlist(lapply(strsplit(split = "[/]", x = df$source), function(x) unlist(x)[3]))
+      by_tab <- by(data = short_url, INDICES = df$country, FUN = unique)
+      len_country <- unlist(lapply(by_tab, length))
+      by_df <- array(by_tab, dim(by_tab), dimnames(by_tab))
+      data.out <- data.frame(rep(names(len_country), times = len_country), as.character(unlist(by_tab)))
+    }
+
     colnames(data.out) <- c("Country", "News Sources")
     data.out <- na.omit(data.out)
+    
     DT::datatable(data.out)
   })
 }
