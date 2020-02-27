@@ -29,12 +29,10 @@ navbarPage("COVID-19", id="nav",
                                       
                                       h3(textOutput("total_cases")),
                                       h4(textOutput("last_updated")),
-                                      selectInput("wuhan_resident", "Lives in Wuhan?", unique(full_data$lives_in_Wuhan), multiple = TRUE),
-                                      selectInput("travel_history_location", "Travel History", unique(full_data$travel_history_location), multiple = TRUE),
+                                      selectInput("confirmed", "Confirmed Cases Only", c("No", "Yes"), multiple = FALSE),
                                       selectInput("country", "Country", unique(full_data$country), multiple = TRUE),
-                                      
-                                      selectInput("confirmed", "Confirmed Cases Only", c("No", "Yes"), multiple = FALSE)
-                                      #actionButton("reset_edges", "Reset Edges")
+                                      selectInput("travel_history_location", "Travel History", unique(full_data$travel_history_location), multiple = TRUE),
+                                      actionButton("reset_edges", "Reset Map")
                                       
                                       #plotOutput("histCentile", height = 200)
                                       

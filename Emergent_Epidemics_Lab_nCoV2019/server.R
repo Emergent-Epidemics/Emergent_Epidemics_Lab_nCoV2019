@@ -214,6 +214,13 @@ function(input, output, session) {
     }
   })
   
+  #reset map
+  observeEvent(input$reset_edges, {
+    updateSelectInput(session, "wuhan_resident", choices = unique(full_data$lives_in_Wuhan))
+    updateSelectInput(session, "travel_history_location", choices = unique(full_data$travel_history_location))
+    updateSelectInput(session, "country", choices =  unique(full_data$country))
+    updateSelectInput(session, "confirmed", selected = "No")
+  })
   ###############
   #Data Explorer#
   ###############
