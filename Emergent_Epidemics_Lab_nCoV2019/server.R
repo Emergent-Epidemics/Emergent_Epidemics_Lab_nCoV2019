@@ -31,43 +31,61 @@ function(input, output, session) {
   })
   
   #add cases from filtered view
-  observe({
+  observeEvent(c(input$wuhan_resident, input$travel_history_location, input$country, input$confirmed),{
     filter_data <- make_filter_data()
 
     first_date <- min(filter_data$date_confirmation, na.rm = TRUE)
     first_date_plot <- format(first_date, format = "%d-%m-%Y")
+    filter_data_china <- NULL
     
-    colorData <-  Sys.time() - filter_data$date_confirmation
-    colorData <- round(as.numeric(colorData, units = "days"), 0)
-    
-    pal <- colorFactor(palette = rev(c("#4292c6", "#08519c", "#a50f15", "#67000d")), domain = colorData)
-    
-    node_radii <- 6 - colorData
-    node_radii[which(node_radii > 8)] <- 6
-    node_radii[which(node_radii < 3)] <- 3
-    node_radii[which(is.na(node_radii) == TRUE)] <- 2
-    
-    node_opac <- node_radii/max(node_radii, na.rm = TRUE)
-    
-    filter_data$node_radii <- node_radii
-    
-    if(is.finite(max(colorData, na.rm = TRUE)) == FALSE){
-      legend_vals <- NA
-    }else{
-      legend_vals <- round(seq(1, max(colorData, na.rm = TRUE), length.out = 10),0)
+    china_filt <- which(filter_data$province == "Hubei")
+    if(length(china_filt) > 0){
+      filter_data_china <- filter_data[china_filt, ]
+      filter_data <- filter_data[-china_filt,]
     }
     
-
-    leafletProxy("map", data = filter_data) %>%
-      clearMarkers() %>%
-      clearPopups() %>%
-      addCircleMarkers(lng = ~longitude, lat = ~latitude, layerId = ~ID, radius= ~node_radii, stroke=FALSE, fillOpacity=node_opac, fillColor=pal(colorData)) %>%
-      addLegend(position = "bottomleft", pal=pal, values=legend_vals, title=paste0("Days since confirmation"), layerId="colorLegend")
+    if(nrow(filter_data) > 0){
+      colorData <-  Sys.time() - filter_data$date_confirmation
+      colorData <- round(as.numeric(colorData, units = "days"), 0)
+      
+      pal <- colorFactor(palette = rev(c("#4292c6", "#08519c", "#a50f15", "#67000d")), domain = colorData)
+      
+      node_radii <- 6 - colorData
+      node_radii[which(node_radii > 8)] <- 6
+      node_radii[which(node_radii < 3)] <- 3
+      node_radii[which(is.na(node_radii) == TRUE)] <- 2
+      
+      node_opac <- node_radii/max(node_radii, na.rm = TRUE)
+      
+      filter_data$node_radii <- node_radii
+      
+      if(is.finite(max(colorData, na.rm = TRUE)) == FALSE){
+        legend_vals <- NA
+      }else{
+        legend_vals <- round(seq(1, max(colorData, na.rm = TRUE), length.out = 10),0)
+      }
+      
+      leafletProxy("map", data = filter_data) %>%
+        clearMarkers() %>%
+        clearPopups() %>%
+        clearGroup(group = "heatmap-china") %>% 
+        addCircleMarkers(lng = ~longitude, lat = ~latitude, layerId = ~ID, radius= ~node_radii, stroke=FALSE, fillOpacity=node_opac, fillColor=pal(colorData)) %>%
+        addLegend(position = "bottomleft", pal=pal, values=legend_vals, title=paste0("Days since confirmation"), layerId="colorLegend")
+    }
     
-    #leafletProxy("map", data = filter_data_china) %>%
-    #  clearGroup(group = "heatmap-china") %>% 
-    #  addHeatmap(lng=~longitude, lat=~latitude, group = "heatmap-china", gradient = "Greys", radius = 25, blur = 10)
+    if(is.null(filter_data_china) == FALSE & nrow(filter_data) == 0){
+      leafletProxy("map", data = filter_data_china[1:10000,]) %>%
+        clearMarkers() %>%
+        clearPopups() %>%
+        clearGroup(group = "heatmap-china") %>% 
+        addHeatmap(lng=~longitude, lat=~latitude, group = "heatmap-china", gradient = "OrRd", radius = 10, blur = 20)
+    }
     
+    if(is.null(filter_data_china) == FALSE & nrow(filter_data) > 0){
+      leafletProxy("map", data = filter_data_china[1:10000,]) %>%
+        clearGroup(group = "heatmap-china") %>% 
+        addHeatmap(lng=~longitude, lat=~latitude, group = "heatmap-china", gradient = "OrRd", radius = 10, blur = 20)
+    }
   })
   
   #update data
